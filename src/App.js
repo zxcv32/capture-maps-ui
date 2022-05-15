@@ -17,21 +17,25 @@ function App() {
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      mode: 'no-cors',
+      mode: 'cors',
       body: JSON.stringify(props),
-      responseType: "blob"
     };
     const url = configData.API_HOST + "print"
     fetch(url, requestOptions)
-    .then(response => {
-      response.arrayBuffer().then(function (buffer) {
-        const url = window.URL.createObjectURL(new Blob([buffer]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "capture.png");
-        document.body.appendChild(link);
-        // link.click();
-      });
+    .then((response) => response.blob())
+    .then((blob) => {
+      const url = window.URL.createObjectURL(
+          new Blob([blob]),
+      );
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute(
+          'download',
+          'capture.png',
+      );
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
     })
 
     .catch(err => {
