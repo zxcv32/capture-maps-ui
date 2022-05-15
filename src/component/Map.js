@@ -1,7 +1,7 @@
 import {GoogleMap, useLoadScript} from "@react-google-maps/api";
 import React from "react";
 
-const center = {lat: 30.31696355790659, lng: 78.0325606876011}
+const center = {lat: 30.316963, lng: 78.032560}
 const containerStyle = {
   width: '100%',
   height: '100%'
