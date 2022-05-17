@@ -1,16 +1,25 @@
 import './App.css';
-import {React, useState} from 'react'
+import React, {useState} from 'react'
 import {MapAp, specs} from "./component/Map"
+import Button from 'react-bootstrap/Button'
 import configData from './config'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Col, Container, Row} from "react-bootstrap";
 
 function App() {
 
   const defaultZoom = 15
   const defaultRadius = 5
-  const [zoom, setZoom] = useState(defaultZoom);
-  const [radius, setRadius] = useState(defaultRadius);
 
-  function Send(props) {
+  let [zoom, setZoom] = useState(defaultZoom);
+  let [radius, setRadius] = useState(defaultRadius);
+  let [disable, setDisable] = useState(false);
+
+  async function Send(props) {
+    if (disable) {
+      return;
+    }
+    setDisable(true);
     props.zoom = zoom
     props.radius = radius
     console.log(JSON.stringify(props))
@@ -21,7 +30,7 @@ function App() {
       body: JSON.stringify(props),
     };
     const url = configData.API_HOST + "print"
-    fetch(url, requestOptions)
+    await fetch(url, requestOptions)  // blocking action
     .then((response) => response.blob())
     .then((blob) => {
       const url = window.URL.createObjectURL(
@@ -37,18 +46,23 @@ function App() {
       link.click();
       link.parentNode.removeChild(link);
     })
-
     .catch(err => {
       console.log(err);
     });
+    setDisable(false)
   }
 
   return (
       <div className="App">
         <div><h1>Capture Maps</h1>
-          <InputForm/>
+          <Container>
+            <Row>
+              <Col style={{height: `90vh`}}><MapAp/></Col>
+              <Col md="2" lg="2">
+                <InputForm/></Col>
+            </Row>
+          </Container>
         </div>
-        <MapAp/>
       </div>
   );
 
@@ -62,17 +76,22 @@ function App() {
                      setZoom(parseInt(e.target.value))
                    }}/>
           </label>
-          <br/>
+          <br/><br/>
           <label>Radius
             <input type="number" placeholder={defaultRadius}
-                // defaultValue={defaultRadius}
                    value={radius}
                    onChange={(e) => {
                      setRadius(parseInt(e.target.value))
                    }}/>
           </label>
-          <br/>
-          <input type="button" value={"Capture"} onClick={() => Send(specs)}/>
+          <br/><br/>
+          <small>Latitude: {specs.lat}, Longitude: {specs.lng},
+            Tile&nbsp;Resolution:
+            512x512</small>
+          <br/><br/>
+          <Button disabled={disable}
+                  onClick={() => Send(specs)}>{disable ? 'Capturing...'
+              : 'Capture'}</Button>
         </form>
     )
   }
