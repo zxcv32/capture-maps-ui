@@ -35,9 +35,9 @@ function Map() {
       specs.lat = newCenter.lat();
       specs.lng = newCenter.lng();
       // Override from UI input
-      // specs.zoom = mapref.zoom;
-      // specs.radius = 5
-      console.debug("specs: " + specs);
+      specs.zoom = mapref.zoom;
+      specs.radius = 5  // TODO calculate or fetch from backend dynamically
+      console.debug("specs: " + JSON.stringify(specs));
     }
   };
 

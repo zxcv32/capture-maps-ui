@@ -1,10 +1,37 @@
 import './App.css';
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {MapAp, specs} from "./component/Map"
 import Button from 'react-bootstrap/Button'
 import configData from './config'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Col, Container, Row} from "react-bootstrap";
+
+function Meta() {
+
+  const [displayLat, setDisplayLat] = useState(specs.lat)
+  const [displayLng, setDisplayLng] = useState(specs.lng)
+  const [mapZoom, setMapZoom] = useState(specs.zoom)
+  const [displayTileResolution, setDisplayTileResolution] = useState(
+      "512x512")
+
+  // FIXME watch specs change
+  useEffect(() => {
+    setDisplayLat(specs.lat)
+    setDisplayLng(specs.lng)
+    // not the form zoom form input
+    setMapZoom(specs.zoom)
+    console.log("some change: " + JSON.stringify(specs))
+  }, [specs.lat, specs.lng, specs.zoom]);
+
+  return (
+      <small>
+        Latitude:&nbsp;{displayLat},
+        Longitude:&nbsp;{displayLng},
+        Tile&nbsp;Resolution:&nbsp;{displayTileResolution},
+        Map&nbsp;Zoom:&nbsp;{mapZoom}
+      </small>
+  );
+}
 
 function App() {
 
@@ -15,19 +42,24 @@ function App() {
   let [radius, setRadius] = useState(defaultRadius);
   let [disable, setDisable] = useState(false);
 
-  async function Send(props) {
+  async function Send() {
     if (disable) {
       return;
     }
+    let data = {
+      lat: specs.lat,
+      lng: specs.lng,
+      zoom: zoom,
+      radius: radius
+    }
     setDisable(true);
-    props.zoom = zoom
-    props.radius = radius
-    console.log(JSON.stringify(props))
+    console.log(JSON.stringify(data))
+
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       mode: 'cors',
-      body: JSON.stringify(props),
+      body: JSON.stringify(data),
     };
     const url = configData.API_HOST + "print"
     await fetch(url, requestOptions)  // blocking action
@@ -59,7 +91,8 @@ function App() {
             <Row>
               <Col style={{height: `90vh`}}><MapAp/></Col>
               <Col md="2" lg="2">
-                <InputForm/></Col>
+                <InputForm/>
+              </Col>
             </Row>
           </Container>
         </div>
@@ -67,6 +100,7 @@ function App() {
   );
 
   function InputForm() {
+
     return (
         <form>
           <label>Zoom
@@ -85,12 +119,10 @@ function App() {
                    }}/>
           </label>
           <br/><br/>
-          <small>Latitude: {specs.lat}, Longitude: {specs.lng},
-            Tile&nbsp;Resolution:
-            512x512</small>
+          <Meta/>
           <br/><br/>
           <Button disabled={disable}
-                  onClick={() => Send(specs)}>{disable ? 'Capturing...'
+                  onClick={() => Send()}>{disable ? 'Capturing...'
               : 'Capture'}</Button>
         </form>
     )
