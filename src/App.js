@@ -77,8 +77,8 @@ function App() {
               <Col style={{height: `90vh`}}><MapAp
                   setDisplayLat={setDisplayLat} setDisplayLng={setDisplayLng}
                   setMapZoom={setMapZoom} setMapTypeId={setMapTypeId}/></Col>
-              <Col md="2" lg="2">
-                <InputForm/>
+              <Col md="2" lg="2" id={"inputForm"}>
+                <InputForm />
               </Col>
             </Row>
           </Container>
@@ -89,7 +89,7 @@ function App() {
   function InputForm() {
     return (
         <form>
-          <label>Capture Zoom Level
+          <label>Capture Zoom Level&nbsp;
             <input type="number" placeholder={defaultZoom}
                    value={zoom}
                    onChange={(e) => {
@@ -97,7 +97,7 @@ function App() {
                    }}/>
           </label>
           <br/><br/>
-          <label>Capture Tile Radius
+          <label>Capture Tile Radius&nbsp;
             <input type="number" placeholder={defaultRadius}
                    value={radius}
                    onChange={(e) => {

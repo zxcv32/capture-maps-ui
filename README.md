@@ -3,6 +3,8 @@
 Front end for [Capture Maps API](https://github.com/zxcV32/capture-maps-api) to download detailed
 Maps (Google Maps)
 
+**Try out [maps.zxcv32.com](https://maps.zxcv32.com/)**
+
 # Setup
 1. Create `.env` in the project root and store Google Maps Static API|
 

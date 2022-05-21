@@ -1,3 +1,12 @@
+html, .App{
+  background-color: #131516;
+  color: #d8d4cf;
+}
+
+#inputForm {
+  padding-top: 10px;
+}
+
 .App {
   text-align: center;
 }
