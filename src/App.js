@@ -42,6 +42,13 @@ function App() {
     };
     const url = configData.API_HOST + "print"
     await fetch(url, requestOptions)  // blocking action
+    .then((response) =>{
+      if (!response.ok){
+        throw new Error(
+            `HTTP response error status code: ${response.status}`
+        );
+      }
+    })
     .then((response) => response.blob())
     .then((blob) => {
       const url = window.URL.createObjectURL(
