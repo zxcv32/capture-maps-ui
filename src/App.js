@@ -25,8 +25,8 @@ function App() {
       return;
     }
     let data = {
-      lat: specs.lat,
-      lng: specs.lng,
+      lat: displayLat,
+      lng: displayLng,
       zoom: zoom,
       radius: radius,
       mapTypeId: mapTypeId
