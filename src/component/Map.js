@@ -40,8 +40,8 @@ function Map({setDisplayLat, setDisplayLng, setMapZoom, setMapTypeId}) {
   const handleCenterChanged = () => {
     if (mapref) {
       const newCenter = mapref.getCenter();
-      setDisplayLat(newCenter.lat().toFixed(6));
-      setDisplayLng(newCenter.lng().toFixed(6));
+      setDisplayLat(parseFloat(newCenter.lat().toFixed(6)));
+      setDisplayLng(parseFloat(newCenter.lng().toFixed(6)));
       setMapZoom(mapref.zoom);
     }
   };
