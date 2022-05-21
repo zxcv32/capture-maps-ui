@@ -1,39 +1,17 @@
 import './App.css';
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {MapAp, specs} from "./component/Map"
 import Button from 'react-bootstrap/Button'
 import configData from './config'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Col, Container, Row} from "react-bootstrap";
 
-function Meta() {
-
+function App() {
   const [displayLat, setDisplayLat] = useState(specs.lat)
   const [displayLng, setDisplayLng] = useState(specs.lng)
   const [mapZoom, setMapZoom] = useState(specs.zoom)
-  const [displayTileResolution, setDisplayTileResolution] = useState(
-      "512x512")
-
-  // FIXME watch specs change
-  useEffect(() => {
-    setDisplayLat(specs.lat)
-    setDisplayLng(specs.lng)
-    // not the form zoom form input
-    setMapZoom(specs.zoom)
-    console.log("some change: " + JSON.stringify(specs))
-  }, [specs.lat, specs.lng, specs.zoom]);
-
-  return (
-      <small>
-        Latitude:&nbsp;{displayLat},
-        Longitude:&nbsp;{displayLng},
-        Tile&nbsp;Resolution:&nbsp;{displayTileResolution},
-        Map&nbsp;Zoom:&nbsp;{mapZoom}
-      </small>
-  );
-}
-
-function App() {
+  const [mapTypeId, setMapTypeId] = useState(specs.mapTypeId)
+  const [displayTileResolution, setDisplayTileResolution] = useState("512x512")
 
   const defaultZoom = 15
   const defaultRadius = 5
@@ -50,7 +28,8 @@ function App() {
       lat: specs.lat,
       lng: specs.lng,
       zoom: zoom,
-      radius: radius
+      radius: radius,
+      mapTypeId: mapTypeId
     }
     setDisable(true);
     console.log(JSON.stringify(data))
@@ -89,7 +68,9 @@ function App() {
         <div><h1>Capture Maps</h1>
           <Container>
             <Row>
-              <Col style={{height: `90vh`}}><MapAp/></Col>
+              <Col style={{height: `90vh`}}><MapAp
+                  setDisplayLat={setDisplayLat} setDisplayLng={setDisplayLng}
+                  setMapZoom={setMapZoom} setMapTypeId={setMapTypeId}/></Col>
               <Col md="2" lg="2">
                 <InputForm/>
               </Col>
@@ -100,10 +81,9 @@ function App() {
   );
 
   function InputForm() {
-
     return (
         <form>
-          <label>Zoom
+          <label>Capture Zoom Level
             <input type="number" placeholder={defaultZoom}
                    value={zoom}
                    onChange={(e) => {
@@ -111,7 +91,7 @@ function App() {
                    }}/>
           </label>
           <br/><br/>
-          <label>Radius
+          <label>Capture Tile Radius
             <input type="number" placeholder={defaultRadius}
                    value={radius}
                    onChange={(e) => {
@@ -119,7 +99,12 @@ function App() {
                    }}/>
           </label>
           <br/><br/>
-          <Meta/>
+          <small>
+            Latitude:&nbsp;{displayLat},
+            Longitude:&nbsp;{displayLng},
+            Tile&nbsp;Resolution:&nbsp;{displayTileResolution},
+            Map&nbsp;Zoom:&nbsp;{mapZoom}
+          </small>
           <br/><br/>
           <Button disabled={disable}
                   onClick={() => Send()}>{disable ? 'Capturing...'

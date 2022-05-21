@@ -11,40 +11,53 @@ export let specs = {
   lat: center.lat,
   lng: center.lng,
   zoom: 15,
-  radius: 5
+  radius: 5,
+  mapTypeId: "hybrid"
 };
 
-export function MapAp() {
+export function MapAp({
+  setDisplayLat,
+  setDisplayLng,
+  setMapZoom,
+  setMapTypeId
+}) {
   const {isLoaded} = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   })
   if (!isLoaded) {
     return <div>Loading...</div>
   }
-  return <Map/>;
+  return <Map setDisplayLat={setDisplayLat} setDisplayLng={setDisplayLng}
+              setMapZoom={setMapZoom} setMapTypeId={setMapTypeId}/>;
 }
 
-function Map() {
+function Map({setDisplayLat, setDisplayLng, setMapZoom, setMapTypeId}) {
   const [mapref, setMapRef] = React.useState(null);
   const handleOnLoad = map => {
     setMapRef(map);
   };
+
   const handleCenterChanged = () => {
     if (mapref) {
       const newCenter = mapref.getCenter();
-      specs.lat = newCenter.lat();
-      specs.lng = newCenter.lng();
-      // Override from UI input
-      specs.zoom = mapref.zoom;
-      specs.radius = 5  // TODO calculate or fetch from backend dynamically
-      console.debug("specs: " + JSON.stringify(specs));
+      setDisplayLat(newCenter.lat().toFixed(6));
+      setDisplayLng(newCenter.lng().toFixed(6));
+      setMapZoom(mapref.zoom);
     }
   };
+
+  function handleOnMapTypeIdChanged() {
+    if (mapref) {
+      setMapTypeId(mapref.mapTypeId);
+    }
+  }
 
   return (
       <GoogleMap zoom={13} center={center}
                  mapContainerStyle={containerStyle} mapTypeId="hybrid"
                  onLoad={handleOnLoad}
-                 onCenterChanged={handleCenterChanged}></GoogleMap>
+                 onCenterChanged={handleCenterChanged}
+                 onMapTypeIdChanged={handleOnMapTypeIdChanged}
+      ></GoogleMap>
   )
 }
