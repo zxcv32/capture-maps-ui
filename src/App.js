@@ -32,7 +32,6 @@ function App() {
       mapTypeId: mapTypeId
     }
     setDisable(true);
-    console.log(JSON.stringify(data))
 
     const requestOptions = {
       method: 'POST',
@@ -42,14 +41,14 @@ function App() {
     };
     const url = configData.API_HOST + "print"
     await fetch(url, requestOptions)  // blocking action
-    .then((response) =>{
-      if (!response.ok){
+    .then((response) => {
+      if (!response.ok) {
         throw new Error(
             `HTTP response error status code: ${response.status}`
         );
       }
-    })
-    .then((response) => response.blob())
+      return response
+    }).then((response) => response.blob())
     .then((blob) => {
       const url = window.URL.createObjectURL(
           new Blob([blob]),
