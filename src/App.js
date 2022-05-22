@@ -88,36 +88,42 @@ function App() {
                   setFormZoom={setFormZoom}/></Col>
               <Col md="2" lg="2" id={"inputForm"}>
                 <InputForm/>
-                <div className={"align-items-baseline"} style={{height: `500px`}}>
+                <div className={"align-items-baseline"}
+                     style={{height: `500px`}}>
                   <a target="_blank"
-                     href="https://github.com/zxcV32/capture-maps-ui"><Badge
-                      bg="light" text="dark"><img
-                      src="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-                      height={"32px"}/> Capture Maps UI</Badge></a>
+                     href="https://github.com/zxcV32/capture-maps-ui"
+                     rel="noreferrer"> <Badge
+                      bg="light" text="dark"><img alt="GitHub"
+                                                  src="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
+                                                  height={"32px"}/> Capture Maps
+                    UI</Badge></a>
                   <br/>
                   <br/>
                   <a target="_blank"
-                     href="https://github.com/zxcV32/capture-maps-api"><Badge
-                      bg="light" text="dark"><img
-                      src="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-                      height={"32px"}/> Capture Maps API</Badge></a>
+                     href="https://github.com/zxcV32/capture-maps-api"
+                     rel="noreferrer"><Badge
+                      bg="light" text="dark"><img alt="GitHub"
+                                                  src="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
+                                                  height={"32px"}/> Capture Maps
+                    API</Badge></a>
                 </div>
               </Col>
             </Row>
           </Container>
         </div>
       </div>
-  );
+  )
+      ;
 
   function InputForm() {
 
     return (
         <form>
           <OverlayTrigger
-              key="right"
+              key="right-zoom"
               placement="right"
               overlay={
-                <Tooltip id="tooltip-right">
+                <Tooltip id="tooltip-zoom">
                   Map detail level. [0,21]
                 </Tooltip>
               }
@@ -133,10 +139,10 @@ function App() {
           </OverlayTrigger>
           <br/><br/>
           <OverlayTrigger
-              key="right"
+              key="right-radius"
               placement="right"
               overlay={
-                <Tooltip id="tooltip-right">
+                <Tooltip id="tooltip-radius">
                   Number of images in one direction. Total images =
                   (2*radius-1)^2. [1,15]
                 </Tooltip>
