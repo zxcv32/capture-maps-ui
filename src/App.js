@@ -4,6 +4,7 @@ import {MapAp, specs} from "./component/Map"
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import Spinner from 'react-bootstrap/Spinner'
+import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import configData from './config'
@@ -87,6 +88,20 @@ function App() {
                   setFormZoom={setFormZoom}/></Col>
               <Col md="2" lg="2" id={"inputForm"}>
                 <InputForm/>
+                <div className={"align-items-baseline"} style={{height: `500px`}}>
+                  <a target="_blank"
+                     href="https://github.com/zxcV32/capture-maps-ui"><Badge
+                      bg="light" text="dark"><img
+                      src="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
+                      height={"32px"}/> Capture Maps UI</Badge></a>
+                  <br/>
+                  <br/>
+                  <a target="_blank"
+                     href="https://github.com/zxcV32/capture-maps-api"><Badge
+                      bg="light" text="dark"><img
+                      src="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
+                      height={"32px"}/> Capture Maps API</Badge></a>
+                </div>
               </Col>
             </Row>
           </Container>
@@ -144,12 +159,12 @@ function App() {
             Map&nbsp;Zoom:&nbsp;{mapZoom}
           </small>
           <br/><br/>
+          <Error/>
           <Button disabled={disable}
                   onClick={() => Send()}>{disable ? <span><Spinner
                   animation="border" size="sm" variant="dark"/> Capturing...</span>
               : 'Capture'} </Button>
           <br/><br/>
-          <Error/>
         </form>
     )
   }
