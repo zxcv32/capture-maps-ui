@@ -2,6 +2,7 @@ import './App.css';
 import React, {useState} from 'react'
 import {MapAp, specs} from "./component/Map"
 import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 import configData from './config'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Col, Container, Row} from "react-bootstrap";
@@ -12,6 +13,9 @@ function App() {
   const [mapZoom, setMapZoom] = useState(specs.zoom)
   const [mapTypeId, setMapTypeId] = useState(specs.mapTypeId)
   const [displayTileResolution, setDisplayTileResolution] = useState("512x512")
+
+  const [displayError, setDisplayError] = useState("")
+  const [displayErrorShow, setDisplayErrorShow] = useState(false);
 
   const defaultZoom = 15
   const defaultRadius = 3
@@ -43,9 +47,11 @@ function App() {
     await fetch(url, requestOptions)  // blocking action
     .then((response) => {
       if (!response.ok) {
-        throw new Error(
-            `HTTP response error status code: ${response.status}`
-        );
+        return response.text().then(text =>{
+          setDisplayError(text);
+          setDisplayErrorShow(true);
+          throw new Error(text);
+        });
       }
       return response
     }).then((response) => response.blob())
@@ -62,9 +68,7 @@ function App() {
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
-    })
-    .catch(err => {
-      console.log(err);
+    }).catch(() =>{
     });
     setDisable(false)
   }
@@ -76,7 +80,8 @@ function App() {
             <Row>
               <Col style={{height: `90vh`}}><MapAp
                   setDisplayLat={setDisplayLat} setDisplayLng={setDisplayLng}
-                  setMapZoom={setMapZoom} setMapTypeId={setMapTypeId} setFormZoom={setFormZoom}/></Col>
+                  setMapZoom={setMapZoom} setMapTypeId={setMapTypeId}
+                  setFormZoom={setFormZoom}/></Col>
               <Col md="2" lg="2" id={"inputForm"}>
                 <InputForm/>
               </Col>
@@ -95,6 +100,7 @@ function App() {
                    defaultValue={formZoom.toString()}
                    onChange={(e) => {
                      setFormZoom(parseInt(e.target.value))
+                     setDisplayErrorShow(false);
                    }}/>
           </label>
           <br/><br/>
@@ -103,6 +109,7 @@ function App() {
                    defaultValue={formRadius.toString()}
                    onChange={(e) => {
                      setFormRadius(parseInt(e.target.value))
+                     setDisplayErrorShow(false);
                    }}/>
           </label>
           <br/><br/>
@@ -116,8 +123,20 @@ function App() {
           <Button disabled={disable}
                   onClick={() => Send()}>{disable ? 'Capturing...'
               : 'Capture'}</Button>
+          <br/><br/>
+          <Error/>
         </form>
     )
+  }
+
+  function Error() {
+    if (displayErrorShow) {
+      return (
+          <Alert key="danger" variant="danger">
+            {displayError}
+          </Alert>
+      )
+    }
   }
 }
 
