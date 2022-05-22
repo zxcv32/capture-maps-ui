@@ -3,6 +3,9 @@ import React, {useState} from 'react'
 import {MapAp, specs} from "./component/Map"
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
+import Spinner from 'react-bootstrap/Spinner'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 import configData from './config'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Col, Container, Row} from "react-bootstrap";
@@ -47,7 +50,7 @@ function App() {
     await fetch(url, requestOptions)  // blocking action
     .then((response) => {
       if (!response.ok) {
-        return response.text().then(text =>{
+        return response.text().then(text => {
           setDisplayError(text);
           setDisplayErrorShow(true);
           throw new Error(text);
@@ -68,7 +71,7 @@ function App() {
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
-    }).catch(() =>{
+    }).catch(() => {
     });
     setDisable(false)
   }
@@ -95,23 +98,44 @@ function App() {
 
     return (
         <form>
-          <label>Capture Zoom Level&nbsp;
-            <input type="number" placeholder={defaultZoom.toString()}
-                   defaultValue={formZoom.toString()}
-                   onChange={(e) => {
-                     setFormZoom(parseInt(e.target.value))
-                     setDisplayErrorShow(false);
-                   }}/>
-          </label>
+          <OverlayTrigger
+              key="right"
+              placement="right"
+              overlay={
+                <Tooltip id="tooltip-right">
+                  Map detail level. [0,21]
+                </Tooltip>
+              }
+          >
+            <label>Capture Zoom Level&nbsp;
+              <input type="number" placeholder={defaultZoom.toString()}
+                     defaultValue={formZoom.toString()}
+                     onChange={(e) => {
+                       setFormZoom(parseInt(e.target.value))
+                       setDisplayErrorShow(false);
+                     }}/>
+            </label>
+          </OverlayTrigger>
           <br/><br/>
-          <label>Capture Tile Radius&nbsp;
-            <input type="number" placeholder={defaultRadius.toString()}
-                   defaultValue={formRadius.toString()}
-                   onChange={(e) => {
-                     setFormRadius(parseInt(e.target.value))
-                     setDisplayErrorShow(false);
-                   }}/>
-          </label>
+          <OverlayTrigger
+              key="right"
+              placement="right"
+              overlay={
+                <Tooltip id="tooltip-right">
+                  Number of images in one direction. Total images =
+                  (2*radius-1)^2. [1,15]
+                </Tooltip>
+              }
+          >
+            <label>Capture Tile Radius&nbsp;
+              <input type="number" placeholder={defaultRadius.toString()}
+                     defaultValue={formRadius.toString()}
+                     onChange={(e) => {
+                       setFormRadius(parseInt(e.target.value))
+                       setDisplayErrorShow(false);
+                     }}/>
+            </label>
+          </OverlayTrigger>
           <br/><br/>
           <small>
             Latitude:&nbsp;{displayLat},
@@ -121,8 +145,9 @@ function App() {
           </small>
           <br/><br/>
           <Button disabled={disable}
-                  onClick={() => Send()}>{disable ? 'Capturing...'
-              : 'Capture'}</Button>
+                  onClick={() => Send()}>{disable ? <span><Spinner
+                  animation="border" size="sm" variant="dark"/> Capturing...</span>
+              : 'Capture'} </Button>
           <br/><br/>
           <Error/>
         </form>
