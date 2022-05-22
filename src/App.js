@@ -14,10 +14,10 @@ function App() {
   const [displayTileResolution, setDisplayTileResolution] = useState("512x512")
 
   const defaultZoom = 15
-  const defaultRadius = 5
+  const defaultRadius = 3
 
-  let [zoom, setZoom] = useState(defaultZoom);
-  let [radius, setRadius] = useState(defaultRadius);
+  let [formZoom, setFormZoom] = useState(defaultZoom);
+  let [formRadius, setFormRadius] = useState(defaultRadius);
   let [disable, setDisable] = useState(false);
 
   async function Send() {
@@ -27,8 +27,8 @@ function App() {
     let data = {
       lat: displayLat,
       lng: displayLng,
-      zoom: zoom,
-      radius: radius,
+      zoom: formZoom,
+      radius: formRadius,
       mapTypeId: mapTypeId
     }
     setDisable(true);
@@ -76,9 +76,9 @@ function App() {
             <Row>
               <Col style={{height: `90vh`}}><MapAp
                   setDisplayLat={setDisplayLat} setDisplayLng={setDisplayLng}
-                  setMapZoom={setMapZoom} setMapTypeId={setMapTypeId}/></Col>
+                  setMapZoom={setMapZoom} setMapTypeId={setMapTypeId} setFormZoom={setFormZoom}/></Col>
               <Col md="2" lg="2" id={"inputForm"}>
-                <InputForm />
+                <InputForm/>
               </Col>
             </Row>
           </Container>
@@ -87,21 +87,22 @@ function App() {
   );
 
   function InputForm() {
+
     return (
         <form>
           <label>Capture Zoom Level&nbsp;
-            <input type="number" placeholder={defaultZoom}
-                   value={zoom}
+            <input type="number" placeholder={defaultZoom.toString()}
+                   defaultValue={formZoom.toString()}
                    onChange={(e) => {
-                     setZoom(parseInt(e.target.value))
+                     setFormZoom(parseInt(e.target.value))
                    }}/>
           </label>
           <br/><br/>
           <label>Capture Tile Radius&nbsp;
-            <input type="number" placeholder={defaultRadius}
-                   value={radius}
+            <input type="number" placeholder={defaultRadius.toString()}
+                   defaultValue={formRadius.toString()}
                    onChange={(e) => {
-                     setRadius(parseInt(e.target.value))
+                     setFormRadius(parseInt(e.target.value))
                    }}/>
           </label>
           <br/><br/>

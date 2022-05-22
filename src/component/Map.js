@@ -11,7 +11,7 @@ export let specs = {
   lat: center.lat,
   lng: center.lng,
   zoom: 15,
-  radius: 5,
+  radius: 3,
   mapTypeId: "hybrid"
 };
 
@@ -19,7 +19,8 @@ export function MapAp({
   setDisplayLat,
   setDisplayLng,
   setMapZoom,
-  setMapTypeId
+  setMapTypeId,
+  setFormZoom
 }) {
   const {isLoaded} = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -28,10 +29,17 @@ export function MapAp({
     return <div>Loading...</div>
   }
   return <Map setDisplayLat={setDisplayLat} setDisplayLng={setDisplayLng}
-              setMapZoom={setMapZoom} setMapTypeId={setMapTypeId}/>;
+              setMapZoom={setMapZoom} setMapTypeId={setMapTypeId}
+              setFormZoom={setFormZoom}/>;
 }
 
-function Map({setDisplayLat, setDisplayLng, setMapZoom, setMapTypeId}) {
+function Map({
+  setDisplayLat,
+  setDisplayLng,
+  setMapZoom,
+  setMapTypeId,
+  setFormZoom
+}) {
   const [mapref, setMapRef] = React.useState(null);
   const handleOnLoad = map => {
     setMapRef(map);
@@ -43,6 +51,7 @@ function Map({setDisplayLat, setDisplayLng, setMapZoom, setMapTypeId}) {
       setDisplayLat(parseFloat(newCenter.lat().toFixed(6)));
       setDisplayLng(parseFloat(newCenter.lng().toFixed(6)));
       setMapZoom(mapref.zoom);
+      setFormZoom(mapref.zoom);
     }
   };
 
