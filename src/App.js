@@ -13,7 +13,7 @@ function App() {
   const [mapZoom, setMapZoom] = useState(specs.zoom)
   const [mapTypeId, setMapTypeId] = useState(specs.mapTypeId)
   const [displayTileResolution, setDisplayTileResolution] = useState("")
-  setDisplayTileResolution("512x512")
+
   const [displayError, setDisplayError] = useState("")
   const [displayErrorShow, setDisplayErrorShow] = useState(false);
 
