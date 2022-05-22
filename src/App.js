@@ -12,13 +12,13 @@ function App() {
   const [displayLng, setDisplayLng] = useState(specs.lng)
   const [mapZoom, setMapZoom] = useState(specs.zoom)
   const [mapTypeId, setMapTypeId] = useState(specs.mapTypeId)
-  const [displayTileResolution, setDisplayTileResolution] = useState("")
+  const [displayTileResolution, setDisplayTileResolution] = useState("512x512")
 
   const [displayError, setDisplayError] = useState("")
   const [displayErrorShow, setDisplayErrorShow] = useState(false);
 
-  const defaultZoom = 15
-  const defaultRadius = 3
+  const defaultZoom = specs.zoom
+  const defaultRadius = specs.radius
 
   let [formZoom, setFormZoom] = useState(defaultZoom);
   let [formRadius, setFormRadius] = useState(defaultRadius);
