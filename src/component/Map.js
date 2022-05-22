@@ -10,7 +10,7 @@ const containerStyle = {
 export let specs = {
   lat: center.lat,
   lng: center.lng,
-  zoom: 15,
+  zoom: 13,
   radius: 3,
   mapTypeId: "hybrid"
 };
@@ -62,7 +62,7 @@ function Map({
   }
 
   return (
-      <GoogleMap zoom={13} center={center}
+      <GoogleMap zoom={specs.zoom} center={center}
                  mapContainerStyle={containerStyle} mapTypeId="hybrid"
                  onLoad={handleOnLoad}
                  onCenterChanged={handleCenterChanged}
