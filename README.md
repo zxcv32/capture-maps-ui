@@ -22,7 +22,7 @@ Maps (Google Maps)
 | [x]    | map to image                                  |
 | [ ]    | map to printable pdf                          |
 | [ ]    | Dynamic radius on zoom in/out (or hide field) |
-| [ ]    | map to overlapping roads and satellite        |
+| [ ]    | map to overlapping roads, satellite, terrain  |
 | [ ]    | Draw/Select region to print                   |
 | [ ]    | Payment calculator                            |
 | [ ]    | Payment processor                             |
