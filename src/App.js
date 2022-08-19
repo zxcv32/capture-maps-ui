@@ -7,7 +7,6 @@ import Spinner from 'react-bootstrap/Spinner'
 import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import configData from './config'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Col, Container, Row} from "react-bootstrap";
 
@@ -47,7 +46,7 @@ function App() {
       mode: 'cors',
       body: JSON.stringify(data),
     };
-    const url = configData.API_HOST + "print"
+    const url = process.env.REACT_APP_API_HOST + "/print"
     await fetch(url, requestOptions)  // blocking action
     .then((response) => {
       if (!response.ok) {
