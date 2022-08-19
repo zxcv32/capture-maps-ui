@@ -4,7 +4,7 @@ services:
     image: ghcr.io/zxcv32/capture-maps-ui:main
     restart: unless-stopped
     environment:
-      REACT_APP_GOOGLE_MAPS_API_KEY: "${GOOGLE_MAPS_API_KEY}"
-      REACT_APP_API_HOST: "${API_HOST}"
+      GOOGLE_MAPS_API_KEY: "${GOOGLE_MAPS_API_KEY}"
+      API_HOST: "${API_HOST}"
     ports:
       - 9001:80
