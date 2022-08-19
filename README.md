@@ -15,6 +15,9 @@ Maps (Google Maps)
    npm install
    npm start
    ```
+## Docker
+
+`docker compose --env-file .env up -d`
 
 ![img.png](assets/img.png)
 
