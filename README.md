@@ -8,12 +8,16 @@ Maps (Google Maps)
 # Setup
 1. Create `.env` in the project root and store Google Maps Static API|
 
-   `REACT_APP_GOOGLE_MAPS_API_KEY=<YOUR API_KEY>`
-2. Start Project
-
-   `npm start`
+   `cp .env.template .env`
+2. Run project
+   
+   ```bash
+   npm install
+   npm start
+   ```
 
 ![img.png](assets/img.png)
+
 
 ## Feature List
 
