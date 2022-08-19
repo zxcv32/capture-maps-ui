@@ -17,7 +17,8 @@ Maps (Google Maps)
    ```
 ## Docker
 
-`docker compose --env-file .env up -d`
+`docker build -t ghcr.io/zxcv32/capture-maps-ui:main --build-arg GOOGLE_MAPS_API_KEY='<API_KEY>' --build-arg API_HOST='<host>' .`
+`docker compose up -d`
 
 ![img.png](assets/img.png)
 
